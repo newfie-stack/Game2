@@ -107,14 +107,30 @@ function draw() {
         }
         
         ctx.fillStyle = gradient;
+        
+        // Draw rounded rectangle with fallback for older browsers
+        const x = segment.x * CELL_SIZE + 1;
+        const y = segment.y * CELL_SIZE + 1;
+        const width = CELL_SIZE - 2;
+        const height = CELL_SIZE - 2;
+        const radius = 4;
+        
         ctx.beginPath();
-        ctx.roundRect(
-            segment.x * CELL_SIZE + 1,
-            segment.y * CELL_SIZE + 1,
-            CELL_SIZE - 2,
-            CELL_SIZE - 2,
-            4
-        );
+        if (ctx.roundRect) {
+            ctx.roundRect(x, y, width, height, radius);
+        } else {
+            // Fallback for browsers without roundRect support
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
         ctx.fill();
         
         // Draw eyes on head
@@ -322,28 +338,28 @@ function togglePause() {
 
 // Handle keyboard input
 function handleKeydown(e) {
-    const key = e.key.toLowerCase();
+    const key = e.key;
     
     // Prevent default for arrow keys to stop page scrolling
-    if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(e.key.toLowerCase())) {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(key)) {
         e.preventDefault();
     }
     
-    // Direction controls
-    if ((key === 'arrowup' || key === 'w') && direction !== 'down') {
+    // Direction controls (support both arrow keys and WASD)
+    if ((key === 'ArrowUp' || key === 'w' || key === 'W') && direction !== 'down') {
         nextDirection = 'up';
-    } else if ((key === 'arrowdown' || key === 's') && direction !== 'up') {
+    } else if ((key === 'ArrowDown' || key === 's' || key === 'S') && direction !== 'up') {
         nextDirection = 'down';
-    } else if ((key === 'arrowleft' || key === 'a') && direction !== 'right') {
+    } else if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && direction !== 'right') {
         nextDirection = 'left';
-    } else if ((key === 'arrowright' || key === 'd') && direction !== 'left') {
+    } else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && direction !== 'left') {
         nextDirection = 'right';
     } else if (key === ' ') {
         // Space to pause/resume
         if (!isGameOver && gameLoop) {
             togglePause();
         }
-    } else if (key === 'enter') {
+    } else if (key === 'Enter') {
         // Enter to start/restart
         if (isGameOver || !gameLoop) {
             startGame();
