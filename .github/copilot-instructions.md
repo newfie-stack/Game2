@@ -11,6 +11,7 @@ Game2 is a game development project. This repository is in its early stages and 
 ```
 Game2/
 ├── .github/              # GitHub configuration and workflows
+│   └── copilot-instructions.md  # Copilot coding agent instructions
 ├── .gitignore           # Git ignore rules
 └── README.md            # Project documentation
 ```
@@ -187,7 +188,7 @@ When working on tasks in this repository:
 - [MDN Web Docs](https://developer.mozilla.org/) - JavaScript reference
 - [Node.js Documentation](https://nodejs.org/docs/) - Node.js API reference
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/) - TypeScript guide
-- [GitHub Copilot Best Practices](https://docs.github.com/en/copilot/tutorials/coding-agent/get-the-best-results)
+- [GitHub Copilot Documentation](https://docs.github.com/en/copilot) - Official Copilot documentation
 
 ---
 
