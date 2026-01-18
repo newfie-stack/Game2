@@ -72,6 +72,8 @@ Example: `feat: add player movement system`
 
 ## Commands
 
+> **Note**: The following are example commands that should be configured in `package.json` as the project develops. Update these scripts based on the actual project setup.
+
 ### Setup
 ```bash
 npm install          # Install dependencies
@@ -114,6 +116,8 @@ npm run format      # Format code
 - Use **UPPER_CASE** for constants: `MAX_PLAYERS`, `DEFAULT_SPEED`
 
 ### Directory Structure Guidelines
+> **Note**: These conventions should be established as the project structure evolves.
+
 - Group related files together by feature
 - Keep configuration files in the root directory
 - Place source code in `src/` directory
